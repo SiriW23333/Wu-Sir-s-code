@@ -1,0 +1,47 @@
+T357C 006:263.131   SEGGER J-Link V7.98c Log File
+T357C 006:270.675   DLL Compiled: Aug  7 2024 15:37:06
+T357C 006:270.693   Logging started @ 2024-10-25 08:39
+T357C 006:270.709   Process: E:\Embeded_system\UV4\UV4.exe
+T357C 006:270.975 - 6270.724ms
+T357C 006:271.180 JLINK_SetWarnOutHandler(...)
+T357C 006:271.202 - 0.182ms
+T357C 006:271.223 JLINK_OpenEx(...)
+T357C 006:274.711   
+  ***** Error: 
+T357C 006:274.833   Cannot connect to J-Link.
+T357C 006:274.989 - 3.765ms returns "Cannot connect to J-Link."
+T357C 006:275.627 
+  ***** Warning: 
+T357C 006:275.661 API Error: API JLINK_GetHardwareVersion function called before JLINKARM_Open()
+T357C 006:275.687 JLINK_GetHardwareVersion()
+T357C 006:278.744   
+  ***** Error: 
+T357C 006:278.964   Cannot connect to J-Link.
+T357C 006:279.020 - 3.332ms
+T357C 009:335.478 JLINK_IsOpen()
+T357C 009:343.245 - 0.085ms returns 0x00
+T357C 009:343.307 JLINK_EMU_SelectByUSBSN(SerialNo = 0)
+T357C 009:344.244 - 0.944ms returns 0xFFFFFFFF
+T357C 009:344.256 JLINK_EnableLog(...)
+T357C 009:344.262 - 0.005ms
+T357C 009:344.271 JLINK_SetLogFile(...)
+T357C 009:344.277 - 0.009ms
+T357C 009:344.283 JLINK_SetWarnOutHandler(...)
+T357C 009:344.288 - 0.005ms
+T357C 009:344.294 JLINK_OpenEx(...)
+T357C 009:347.899   
+  ***** Error: 
+T357C 009:347.914   Cannot connect to J-Link.
+T357C 009:348.102 - 3.807ms returns "Cannot connect to J-Link."
+T357C 009:349.558 
+  ***** Warning: 
+T357C 009:349.576 API Error: API JLINK_GetHardwareVersion function called before JLINKARM_Open()
+T357C 009:349.586 JLINK_GetHardwareVersion()
+T357C 009:354.354   
+  ***** Error: 
+T357C 009:354.408   Cannot connect to J-Link.
+T357C 009:354.465 - 4.878ms
+T357C 013:121.408 JLINK_Close()
+T357C 013:121.620 - 0.213ms
+T357C 013:121.639   
+T357C 013:121.646   Closed
