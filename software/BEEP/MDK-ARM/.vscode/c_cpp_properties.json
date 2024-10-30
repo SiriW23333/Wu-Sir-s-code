@@ -3,14 +3,14 @@
         {
             "name": "BEEP",
             "includePath": [
-                "e:\\EE2\\EE_experiments2\\BEEP\\Core\\Inc",
-                "e:\\EE2\\EE_experiments2\\BEEP\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
-                "e:\\EE2\\EE_experiments2\\BEEP\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
-                "e:\\EE2\\EE_experiments2\\BEEP\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
-                "e:\\EE2\\EE_experiments2\\BEEP\\Drivers\\CMSIS\\Include",
-                "e:\\EE2\\EE_experiments2\\BEEP\\MDK-ARM",
-                "e:\\EE2\\EE_experiments2\\BEEP\\Core\\Src",
-                "e:\\EE2\\EE_experiments2\\BEEP\\Drivers\\STM32F4xx_HAL_Driver\\Src"
+                "e:\\EE2\\EE_experiments2\\software\\BEEP\\Core\\Inc",
+                "e:\\EE2\\EE_experiments2\\software\\BEEP\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
+                "e:\\EE2\\EE_experiments2\\software\\BEEP\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
+                "e:\\EE2\\EE_experiments2\\software\\BEEP\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
+                "e:\\EE2\\EE_experiments2\\software\\BEEP\\Drivers\\CMSIS\\Include",
+                "e:\\EE2\\EE_experiments2\\software\\BEEP\\MDK-ARM",
+                "e:\\EE2\\EE_experiments2\\software\\BEEP\\Core\\Src",
+                "e:\\EE2\\EE_experiments2\\software\\BEEP\\Drivers\\STM32F4xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",

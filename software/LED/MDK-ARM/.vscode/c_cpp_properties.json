@@ -3,14 +3,14 @@
         {
             "name": "LED",
             "includePath": [
-                "e:\\EE2\\EE_experiments2\\LED\\Core\\Inc",
-                "e:\\EE2\\EE_experiments2\\LED\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
-                "e:\\EE2\\EE_experiments2\\LED\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
-                "e:\\EE2\\EE_experiments2\\LED\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
-                "e:\\EE2\\EE_experiments2\\LED\\Drivers\\CMSIS\\Include",
-                "e:\\EE2\\EE_experiments2\\LED\\MDK-ARM",
-                "e:\\EE2\\EE_experiments2\\LED\\Core\\Src",
-                "e:\\EE2\\EE_experiments2\\LED\\Drivers\\STM32F4xx_HAL_Driver\\Src"
+                "e:\\EE2\\EE_experiments2\\software\\LED\\Core\\Inc",
+                "e:\\EE2\\EE_experiments2\\software\\LED\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
+                "e:\\EE2\\EE_experiments2\\software\\LED\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
+                "e:\\EE2\\EE_experiments2\\software\\LED\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
+                "e:\\EE2\\EE_experiments2\\software\\LED\\Drivers\\CMSIS\\Include",
+                "e:\\EE2\\EE_experiments2\\software\\LED\\MDK-ARM",
+                "e:\\EE2\\EE_experiments2\\software\\LED\\Core\\Src",
+                "e:\\EE2\\EE_experiments2\\software\\LED\\Drivers\\STM32F4xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
