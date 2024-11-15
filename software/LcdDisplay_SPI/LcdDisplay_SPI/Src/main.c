@@ -37,13 +37,14 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define LEN 200
+#define LEN 240
 __IO uint16_t ADC_DMA_ConvertValue[LEN];
 __IO uint32_t TransDone =1;
 
-uint8_t ADC_Buffer[LEN];
+uint16_t ADC_Buffer[LEN];
 
-
+ double max;
+ double min;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -73,7 +74,6 @@ void SystemClock_Config(void);
 double Get_ADC(){
   HAL_ADC_Start(&hadc1);
   HAL_ADC_PollForConversion(&hadc1,1);
-
 	return HAL_ADC_GetValue(&hadc1);   
 }
 
@@ -94,7 +94,6 @@ double Get_ADC(){
      HAL_ADC_Stop(&hadc1);
      TransDone=1;
    }
-   	LCD_ShowString(30,50,ADC_Buffer,RED,WHITE,32,0);
  }
 
 /* USER CODE END 0 */
@@ -132,82 +131,59 @@ int main(void)
   MX_ADC1_Init();
   MX_USART1_UART_Init();
   MX_TIM3_Init();
+
   /* USER CODE BEGIN 2 */
 	delay_init(180);			
   LCD_Init();						
 	LCD_Fill(0,0,LCD_W,LCD_H,WHITE);	
-  HAL_ADC_Start_DMA(&hadc1,(uint32_t*)ADC_Buffer,LEN);
+  HAL_ADC_Start_DMA(&hadc1,(uint32_t*)&ADC_Buffer,LCD_W);
   HAL_TIM_Base_Start(&htim3);
  
 
- LCD_DrawLine(0,LCD_H*4/5,LCD_W,LCD_H*4/5,BLACK);
- LCD_ShowString(0,LCD_H*6/7,"max(V):",RED,WHITE,16,0);
- LCD_ShowString(LCD_W/2,LCD_H*6/7,"min(V):",RED,WHITE,16,0);
-
- double max;
- double min;
+ 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    double init=3.3*Get_ADC()/4096;
-    max=init;
-    min=init;
+    max=0.10;
+    min=3.30;
 
-    for(int x=0;x<LCD_W;x++){
-      // HAL_Delay(20);
-      value[x]=3.3*Get_ADC()/4096;
-      HAL_Delay(20);
-      LCD_DrawPoint(x,30*(value[x])+LCD_H/2,RED);
+  LCD_DrawLine(0,LCD_H*4/5,LCD_W,LCD_H*4/5,BLACK);
+  LCD_ShowString(0,LCD_H*6/7,"max(V):",RED,WHITE,16,0);
+  LCD_ShowString(LCD_W/2,LCD_H*6/7,"min(V):",RED,WHITE,16,0);
+   
+  
+    // HAL_ADC_Start_DMA(&hadc1,(uint32_t*)&ADC_Buffer,LCD_W);
+     for(int x=0,i=0;x<LCD_W;x+=4,i++){
+        if(TransDone==1){
+        //HAL_Delay(20);
+        //HAL_ADC_Start_DMA(&hadc1,(uint32_t*)&ADC_Buffer,LCD_W);
+        value[x]=3.3*ADC_Buffer[i+40]/4096;
+        LCD_DrawPoint(x,30*(value[x])+LCD_H/3,RED);
+
+       if(x) LCD_DrawLine(x-4,30*value[x-4]+LCD_H/3,x,value[x]*30+LCD_H/3,RED);
       
-      if(x>=1){
-         LCD_DrawLine(x-1,30*value[x-1]+LCD_H/2,x,value[x]*30+LCD_H/2,RED);
-      }
+        if(value[x]>max)  max=value[x];
+        LCD_ShowFloatNum1(70,LCD_H*6/7,max,3,RED,WHITE,16);
       
-      if(value[x]>max){
-        max=value[x];
-         LCD_ShowFloatNum1(70,LCD_H*6/7,max,3,RED,WHITE,16);
+      if(value[x]<=min)   min=value[x];
+      LCD_ShowFloatNum1(LCD_W/2+50,LCD_H*6/7,min,3,RED,WHITE,16);
       }
-      if(value[x]<=min){
-        min=value[x];
-        LCD_ShowFloatNum1(LCD_W/2+70,LCD_H*6/7,min,3,RED,WHITE,16);
+      if(TransDone==0) i=0;
       }
-
-      // if(x>LCD_W/2){
-      //   LCD_ShowFloatNum1(70,LCD_H*6/7,max,3,RED,WHITE,16);
-      //   LCD_ShowFloatNum1(LCD_W/2+70,LCD_H*6/7,min,3,RED,WHITE,16);
-      // }
-
-      if(x==LCD_W-1){
-       	  LCD_Fill(0,0,LCD_W,LCD_H,WHITE);	
-          LCD_DrawLine(0,LCD_H*4/5,LCD_W,LCD_H*4/5,BLACK);
-          LCD_ShowString(0,LCD_H*6/7,"max(V):",RED,WHITE,16,0);
-          LCD_ShowString(LCD_W/2,LCD_H*6/7,"min(V):",RED,WHITE,16,0);
-           max=init;
-           min=init;
-           x=0;
-        }
-      }
+      LCD_Fill(0,0,LCD_W,LCD_H,WHITE);	
+   }
     }  
 
-    
+
 		// }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//		LCD_ShowPicture(0,0,240,240,gImage_picture);
-		
-		// LCD_ShowString(0,0,"  you qing  ",RED,WHITE,32,0);		//�ַ�����ʾ����
-		// LCD_ShowString(30,50,"LCD_W:",RED,WHITE,16,0);				
-		// LCD_ShowIntNum(80,50,LCD_W,3,RED,WHITE,16);						//������ʾ����
-		// LCD_ShowString(130,50,"LCD_H:",RED,WHITE,16,0);
-		// LCD_ShowIntNum(160,50,LCD_H,3,RED,WHITE,16);
-		 //LCD_ShowString(30,50,ADC_Buffer,RED,WHITE,32,0);
-  }
-  /* USER CODE END 3 */
 
+  /* USER CODE END 3 */
 
 /**
   * @brief System Clock Configuration
