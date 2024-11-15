@@ -24,9 +24,12 @@
 #include "usart.h"
 #include "gpio.h"
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include<string.h>
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +39,14 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define LEN 200
+__IO uint16_t ADC_DMA_ConvertValue[LEN];
+__IO uint32_t TransDone =0;
 
+uint8_t ADC_Buffer[LEN];//
+
+#define KEY1 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,1);
+#define KEY0 HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,0);
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -47,18 +57,39 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t  receive_data;
+double value;
+uint8_t c1,c2,c3;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
+ void HAL_ADC_ConvClptCallback(ADC_HandleTypeDef *hadc){
+   if (TransDone==0){
+     HAL_ADC_Stop(&hadc1);
+     TransDone=1;
+   }
+ }
+double Get_ADC(){
+  HAL_ADC_Start(&hadc1);
+  HAL_ADC_PollForConversion(&hadc1,1);
+
+	return HAL_ADC_GetValue(&hadc1);   
+}
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+     if(receive_data=='0'){
+         KEY0;
+     }else if(receive_data=='1'){
+         KEY1;
+     }
+     HAL_UART_Receive_DMA(&huart1,&receive_data,1);
+ }
 /* USER CODE END 0 */
 
 /**
@@ -95,6 +126,10 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+HAL_ADC_Start_DMA(&hadc1,(uint32_t*)ADC_DMA_ConvertValue,LEN);
+HAL_TIM_Base_Start(&htim3);
+
+
 
   /* USER CODE END 2 */
 
@@ -102,11 +137,29 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		printf("JCL\r\n");
-		HAL_Delay(1000);
+    
+     HAL_UART_Receive_DMA(&huart1,&receive_data,1);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    //  if(TransDone==1){
+    //    for(uint16_t i=0;i<LEN;i++){
+    //      ADC_Buffer[i]=ADC_DMA_ConvertValue[i];
+    //      HAL_UART_Transmit_DMA(&huart1,(uint8_t*)ADC_DMA_ConvertValue,LEN);
+    //    }
+    //      TransDone=0;
+    //      HAL_ADC_Start_DMA(&hadc1,(uint32_t*)ADC_DMA_ConvertValue,LEN);
+    // }
+    value=3.3*Get_ADC()/4096;
+    c1=value;
+    c2=value*10-c1*10;
+    c3=value*100-c2*10-c1*100;
+    ADC_Buffer[0]=c1+0x30;
+    ADC_Buffer[1]=0x2E;
+    ADC_Buffer[2]=c2+0x30;
+    ADC_Buffer[3]=c3+0x30;
+    HAL_UART_Transmit_DMA(&huart1,ADC_Buffer,sizeof(ADC_Buffer));
+    HAL_Delay(200);
   }
   /* USER CODE END 3 */
 }

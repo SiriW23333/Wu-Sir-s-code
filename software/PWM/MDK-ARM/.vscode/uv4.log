@@ -1,4 +1,2 @@
 Load "PWM\\PWM.axf" 
-No ST-LINK detected
-Error: Flash Download failed  -  Target DLL has been cancelled
-Flash Load finished at 18:21:10
+Erase Done.Programming Done.Verify OK.Flash Load finished at 15:39:45
